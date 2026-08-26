@@ -1,0 +1,350 @@
+# CNomarchy 预装软件包列表 (x86_64)
+# 最小可构建版本 — 只包含 Arch 官方源确认存在的包
+# 更多软件（Wine、Waydroid、办公套件等）在用户安装后通过 setup 脚本安装
+
+# ============================================================
+# 基础系统
+# ============================================================
+base
+base-devel
+linux
+linux-firmware
+linux-headers
+
+# ============================================================
+# 引导
+# ============================================================
+grub
+efibootmgr
+os-prober
+mkinitcpio
+
+# ============================================================
+# 文件系统
+# ============================================================
+xfsprogs
+exfatprogs
+ntfs-3g
+dosfstools
+btrfs-progs
+f2fs-tools
+cryptsetup
+lvm2
+parted
+gptfdisk
+
+# ============================================================
+# 网络
+# ============================================================
+networkmanager
+network-manager-applet
+wpa_supplicant
+dialog
+openconnect
+networkmanager-openconnect
+networkmanager-openvpn
+dnsmasq
+iptables-nft
+nftables
+ufw
+curl
+wget
+rsync
+openssh
+sshfs
+samba
+smbclient
+cifs-utils
+nfs-utils
+avahi
+nss-mdns
+
+# ============================================================
+# 音频 (PipeWire)
+# ============================================================
+pipewire
+pipewire-alsa
+pipewire-jack
+pipewire-pulse
+wireplumber
+alsa-utils
+alsa-firmware
+alsa-plugins
+pavucontrol
+
+# ============================================================
+# 蓝牙
+# ============================================================
+bluez
+bluez-utils
+bluez-libs
+blueman
+
+# ============================================================
+# 打印
+# ============================================================
+cups
+cups-pdf
+ghostscript
+gsfonts
+gutenprint
+foomatic-db
+foomatic-db-engine
+hplip
+simple-scan
+sane
+sane-airscan
+
+# ============================================================
+# Wayland + Hyprland
+# ============================================================
+wayland
+wayland-protocols
+xorg-xwayland
+xorg-xlsclients
+xorg-xrdb
+xorg-xset
+xorg-xinput
+libinput
+xf86-input-libinput
+mesa
+mesa-utils
+vulkan-icd-loader
+vulkan-tools
+vulkan-intel
+intel-media-driver
+vulkan-radeon
+libva-mesa-driver
+mesa-vdpau
+
+# Hyprland 窗口管理器
+hyprland
+hyprpaper
+hyprlock
+hypridle
+hyprcursor
+xdg-desktop-portal-hyprland
+xdg-desktop-portal
+xdg-utils
+grim
+slurp
+swappy
+wl-clipboard
+wlogout
+swayidle
+dunst
+brightnessctl
+light
+power-profiles-daemon
+upower
+acpi
+
+# 状态栏 + 启动器 (替代 Quickshell，最小版本)
+waybar
+rofi-wayland
+
+# ============================================================
+# 终端 + Shell
+# ============================================================
+alacritty
+wezterm
+tmux
+zsh
+zsh-completions
+zsh-autosuggestions
+zsh-syntax-highlighting
+bash-completion
+starship
+fzf
+ripgrep
+fd
+eza
+bat
+htop
+btop
+neofetch
+fastfetch
+
+# ============================================================
+# 编辑器 + 开发工具
+# ============================================================
+neovim
+vim
+nano
+git
+git-lfs
+github-cli
+python
+python-pip
+python-setuptools
+python-wheel
+nodejs
+npm
+go
+rust
+rustup
+jdk-openjdk
+ruby
+perl
+cmake
+make
+ninja
+meson
+gcc
+clang
+pkgconf
+autoconf
+automake
+libtool
+docker
+podman
+qemu-base
+qemu-desktop
+libvirt
+edk2-ovmf
+
+# ============================================================
+# 浏览器
+# ============================================================
+chromium
+firefox
+
+# ============================================================
+# 文件管理器 + 桌面工具
+# ============================================================
+thunar
+thunar-archive-plugin
+thunar-media-tags-plugin
+tumbler
+ffmpegthumbnailer
+poppler-glib
+file-roller
+gvfs
+gvfs-afc
+gvfs-gphoto2
+gvfs-mtp
+gvfs-nfs
+gvfs-smb
+flameshot
+obs-studio
+copyq
+libnotify
+polkit-gnome
+
+# ============================================================
+# 中文输入法 (Fcitx5)
+# ============================================================
+fcitx5
+fcitx5-configtool
+fcitx5-gtk
+fcitx5-qt
+fcitx5-lua
+fcitx5-chinese-addons
+fcitx5-pinyin-zhwiki
+
+# ============================================================
+# 中文字体
+# ============================================================
+noto-fonts
+noto-fonts-cjk
+noto-fonts-emoji
+noto-fonts-extra
+wqy-zenhei
+wqy-microhei
+adobe-source-han-sans-cn-fonts
+adobe-source-han-serif-cn-fonts
+ttf-jetbrains-mono
+ttf-jetbrains-mono-nerd
+ttf-fira-code
+ttf-hack
+ttf-nerd-fonts-symbols
+ttf-font-awesome
+
+# ============================================================
+# 办公 (最小)
+# ============================================================
+libreoffice-fresh
+libreoffice-fresh-zh-CN
+evince
+
+# ============================================================
+# 媒体
+# ============================================================
+mpv
+vlc
+ffmpeg
+yt-dlp
+gimp
+inkscape
+imagemagick
+feh
+audacity
+
+# ============================================================
+# 安全
+# ============================================================
+ufw
+fail2ban
+gnupg
+openssl
+keepassxc
+wireguard-tools
+oath-toolkit
+
+# ============================================================
+# 系统工具
+# ============================================================
+gnome-disk-utility
+gparted
+lshw
+hwinfo
+dmidecode
+lsof
+strace
+sysstat
+iotop
+iftop
+nethogs
+bmon
+tlp
+powertop
+journalctl
+logrotate
+reflector
+pacman-contrib
+pkgfile
+unzip
+unrar
+p7zip
+zip
+plocate
+
+# ============================================================
+# Flatpak (兼容层 L1)
+# ============================================================
+flatpak
+xdg-desktop-portal
+xdg-desktop-portal-gtk
+
+# ============================================================
+# Wine + Steam (兼容层 L3，最小)
+# ============================================================
+wine
+wine-mono
+wine-gecko
+winetricks
+steam
+steam-native-runtime
+
+# ============================================================
+# 以下包需要 AUR 或 Omarchy 源，暂不预装，安装后通过脚本安装
+# ============================================================
+# paru                          # AUR 助手，构建后安装
+# waydroid                      # 安卓子系统，AUR
+# quickshell                    # Omarchy 桌面外壳，Omarchy 源
+# omarchy-desktop               # Omarchy 元包，Omarchy 源
+# omarchy-agent                 # Omarchy Agent，Omarchy 源
+# bottles                       # Flatpak 安装
+# spotify-launcher              # AUR
+# obsidian                      # Flatpak
+# onlyoffice                    # Flatpak
