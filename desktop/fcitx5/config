@@ -1,0 +1,48 @@
+# Fcitx5 全局配置
+# 部署到 ~/.config/fcitx5/config
+
+[Hotkey]
+# 切换输入法快捷键
+TriggerKeys=Control+space
+# 切换到上一个输入法
+AltTriggerKeys=Shift_L
+# 在输入法间循环
+EnumerateForwardKeys=
+EnumerateBackwardKeys=
+# 切换中英文
+ActivateKeys=
+DeactivateKeys=
+
+[Behavior]
+# 共享输入法状态（所有应用共享）
+ShareInputState=No
+# 显示预编辑文本
+PreeditEnabledByDefault=True
+# 候选词数量
+PageSize=7
+# 数字键选词
+DefaultPageSize=7
+# 自动保存
+# AutoSave=True
+
+[Appearance]
+# 主题（使用默认，用户可通过 fcitx5-configtool 更改）
+Theme=default
+# 字体
+Font=Sans 12
+# 垂直候选列表
+Vertical Candidate List=False
+
+[Addon]
+# 启用的插件
+EnabledCount=10
+Enabled0=classicui
+Enabled1=dbus
+Enabled2=frontend
+Enabled3=ibus
+Enabled4=keyboard
+Enabled5=notifications
+Enabled6=pinyin
+Enabled7=quickphrase
+Enabled8=spell
+Enabled9=wubi
