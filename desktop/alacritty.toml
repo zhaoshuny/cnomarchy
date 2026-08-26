@@ -1,0 +1,104 @@
+# CNomarchy Alacritty 终端配置
+# 部署到 ~/.config/alacritty/alacritty.toml
+
+# 字体
+[font]
+size = 13
+[font.normal]
+family = "JetBrains Mono"
+style = "Regular"
+[font.bold]
+family = "JetBrains Mono"
+style = "Bold"
+[font.italic]
+family = "JetBrains Mono"
+style = "Italic"
+# 中文字体回退（Alacritty 自动使用 fontconfig 回退）
+[font.offset]
+x = 0
+y = 0
+[font.glyph_offset]
+x = 0
+y = 0
+
+# 外观
+[window]
+padding = { x = 8, y = 8 }
+dynamic_padding = true
+decorations = "none"  # 无边框（Hyprland 管理窗口装饰）
+startup_mode = "Windowed"
+opacity = 0.95  # 轻微透明
+
+[window.background_opacity]
+# 背景透明度（0.0-1.0）
+# 使用 blur 时设为 0.8-0.9 效果更好
+
+# 光标
+[cursor]
+style = { shape = "Block", blinking = "On" }
+blink_interval = 500
+unfocused_hollow = true
+
+# 滚动
+[scrolling]
+history = 10000
+multiplier = 3
+
+# 选择
+[selection]
+save_to_clipboard = true
+
+# 颜色主题（Gruvbox Dark，护眼）
+[colors.primary]
+background = "0x282828"
+foreground = "0xebdbb2"
+
+[colors.cursor]
+text = "0x282828"
+cursor = "0xebdbb2"
+
+[colors.normal]
+black = "0x282828"
+red = "0xcc241d"
+green = "0x98971a"
+yellow = "0xd79921"
+blue = "0x458588"
+magenta = "0xb16286"
+cyan = "0x689d6a"
+white = "0xa89984"
+
+[colors.bright]
+black = "0x928374"
+red = "0xfb4934"
+green = "0xb8bb26"
+yellow = "0xfabd2f"
+blue = "0x83a598"
+magenta = "0xd3869b"
+cyan = "0x8ec07c"
+white = "0xebdbb2"
+
+# 键盘快捷键
+[keyboard.bindings]
+# 复制粘贴
+{ key = "C", mods = "Control|Shift", action = "Copy" }
+{ key = "V", mods = "Control|Shift", action = "Paste" }
+# 增大/减小字体
+{ key = "Equals", mods = "Control", action = "IncreaseFontSize" }
+{ key = "Minus", mods = "Control", action = "DecreaseFontSize" }
+{ key = "0", mods = "Control", action = "ResetFontSize" }
+# 新建窗口/标签
+{ key = "Return", mods = "Control|Shift", action = "SpawnNewInstance" }
+# 搜索
+{ key = "F", mods = "Control|Shift", action = "SearchForward" }
+{ key = "B", mods = "Control|Shift", action = "SearchBackward" }
+# 清屏
+{ key = "K", mods = "Control", action = "ClearHistory" }
+
+# Shell
+[shell]
+program = "/bin/zsh"
+args = ["--login"]
+
+# 鼠标
+[mouse]
+hide_when_typing = true
