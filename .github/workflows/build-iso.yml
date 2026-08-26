@@ -1,0 +1,119 @@
+name: 构建 CNomarchy ISO
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  build-iso:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 显示构建信息
+        run: |
+          echo "仓库: ${{ github.repository }}"
+          echo "分支: ${{ github.ref_name }}"
+          echo "提交: ${{ github.sha }}"
+          echo "时间: $(date)"
+          echo "运行器: $(uname -a)"
+          df -h /
+
+      - name: 确保脚本可执行
+        run: |
+          chmod +x iso/airootfs/customize.sh
+          chmod +x scripts/*.sh
+          ls -la iso/airootfs/customize.sh
+
+      - name: 构建 ISO (Arch Linux Docker)
+        run: |
+          mkdir -p out
+          docker run --rm \
+            --privileged \
+            --device /dev/fuse \
+            --cap-add SYS_ADMIN \
+            -v "${{ github.workspace }}:/build" \
+            -v "${{ github.workspace }}/out:/out" \
+            -w /build \
+            archlinux:latest \
+            bash -c '
+              set -e
+              echo "=== 安装 archiso ==="
+              pacman -Sy --noconfirm archiso
+
+              echo "=== 配置国内镜像加速 ==="
+              cat > /etc/pacman.d/mirrorlist <<"MIRROR"
+              Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch
+              Server = https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch
+              Server = https://mirrors.aliyun.com/archlinux/$repo/os/$arch
+              Server = https://geo.mirror.pkgbuild.com/$repo/os/$arch
+              MIRROR
+
+              echo "=== 开始构建 ==="
+              echo "构建时间预计 20-40 分钟，请耐心等待..."
+              mkarchiso -v -w /tmp/cnomarchy-work -o /out iso
+
+              echo "=== 构建完成 ==="
+              ls -lh /out/
+            '
+
+      - name: 列出产物
+        run: |
+          echo "=== 构建产物 ==="
+          ls -lh out/
+          ISO_FILE=$(ls out/*.iso 2>/dev/null | head -1)
+          if [ -n "$ISO_FILE" ]; then
+            echo "ISO 文件: $ISO_FILE"
+            echo "大小: $(du -h "$ISO_FILE" | cut -f1)"
+            echo "计算 SHA256..."
+            sha256sum "$ISO_FILE"
+            sha256sum "$ISO_FILE" > "${ISO_FILE}.sha256"
+          else
+            echo "❌ 未找到 ISO 文件！"
+            exit 1
+          fi
+
+      - name: 上传 ISO 到构建产物
+        uses: actions/upload-artifact@v4
+        with:
+          name: cnomarchy-iso
+          path: |
+            out/*.iso
+            out/*.sha256
+          retention-days: 30
+
+      - name: 创建发布版本 (Release)
+        if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, 'release')
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v0.1.0-${{ github.run_number }}
+          name: CNomarchy v0.1.0 构建 #${{ github.run_number }}
+          body: |
+            ## CNomarchy 自动构建
+
+            - 构建时间: ${{ github.event.head_commit.timestamp || github.run_started_at }}
+            - 提交: `${{ github.sha }}`
+            - 分支: ${{ github.ref_name }}
+
+            ### 下载
+            下载下方的 ISO 文件，用 Ventoy 或 dd 写入 U 盘即可启动。
+
+            ### 校验
+            下载 `.sha256` 文件，运行 `sha256sum -c <iso文件>.sha256` 验证完整性。
+
+            ### 默认信息
+            - 用户名: `cnomarchy`
+            - 密码: 无（自动登录）
+            - 中文输入法: `Ctrl+Space` 切换
+            - 终端: `Super+Return`
+            - 浏览器: `Super+B`
+            - 应用启动器: `Super+Shift+Space`
+          files: |
+            out/*.iso
+            out/*.sha256
+          draft: false
+          prerelease: true
