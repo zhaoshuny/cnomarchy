@@ -1,0 +1,29 @@
+# Fcitx5 中文输入法配置
+# 部署到 ~/.config/fcitx5/profile
+# 构建时由 customize.sh 部署
+
+[Groups/0]
+# 组名
+Name=Default
+# 默认布局
+Default Layout=us
+# 默认输入法
+DefaultIM=fcitx-keyboard-us
+
+[Groups/0/Items/0]
+# 英文键盘
+Name=keyboard-us
+Layout=
+
+[Groups/0/Items/1]
+# 中文拼音
+Name=pinyin
+Layout=
+
+[Groups/0/Items/2]
+# 五笔（可选）
+Name=wubi
+Layout=
+
+[GroupOrder]
+0=Default
