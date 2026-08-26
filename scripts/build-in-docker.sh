@@ -4,23 +4,30 @@ set -e
 echo "=== 安装 archiso ==="
 pacman -Sy --noconfirm archiso
 
-echo "=== 配置国内镜像加速 ==="
-cat > /etc/pacman.d/mirrorlist <<'MIRROR'
-Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch
-Server = https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch
-Server = https://mirrors.aliyun.com/archlinux/$repo/os/$arch
-Server = https://geo.mirror.pkgbuild.com/$repo/os/$arch
-MIRROR
+echo "=== 查看默认 profile 位置 ==="
+ls -la /usr/share/archiso/configs/ 2>/dev/null || echo "默认 configs 目录不存在"
+find /usr/share/archiso -name "profiledef.sh" 2>/dev/null | head -5
 
-echo "=== mkarchiso 完整帮助 ==="
-mkarchiso 2>&1 || true
-echo "=== 帮助结束 ==="
+echo "=== 查看默认 releng profile 的 profiledef.sh ==="
+DEFAULT_PROFILE="/usr/share/archiso/configs/releng"
+if [ -f "$DEFAULT_PROFILE/profiledef.sh" ]; then
+    cat "$DEFAULT_PROFILE/profiledef.sh"
+else
+    echo "默认 releng profile 不存在，尝试查找其他 profile"
+    find /usr/share/archiso -type d -name "configs" 2>/dev/null
+fi
 
-echo "=== 尝试构建（不带 -w -o）==="
-cd /build
-mkarchiso -v /build/iso 2>&1 || echo "构建失败，退出码: $?"
+echo "=== 默认 profile 的文件结构 ==="
+if [ -d "$DEFAULT_PROFILE" ]; then
+    find "$DEFAULT_PROFILE" -type f | head -30
+fi
 
-echo "=== 检查输出 ==="
-ls -la /build/out/ 2>/dev/null || echo "out 目录不存在"
-ls -la /out/ 2>/dev/null || echo "/out 目录不存在"
-find / -name "*.iso" -type f 2>/dev/null | head -5 || echo "未找到 ISO 文件"
+echo "=== 我的 profile 的 profiledef.sh ==="
+cat /build/iso/profiledef.sh
+
+echo "=== 尝试用默认 profile 构建（最小测试）==="
+mkdir -p /tmp/test-out
+mkarchiso -v -m iso -w /tmp/test-work -o /tmp/test-out "$DEFAULT_PROFILE" 2>&1 | tail -50 || echo "默认 profile 构建失败，退出码: $?"
+
+echo "=== 检查默认 profile 构建结果 ==="
+ls -la /tmp/test-out/ 2>/dev/null || echo "test-out 目录不存在"
