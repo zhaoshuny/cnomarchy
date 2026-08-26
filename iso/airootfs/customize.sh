@@ -72,9 +72,9 @@ EOF
 chmod 0440 /etc/sudoers.d/cnomarchy
 
 # ============================================================
-# 3. 自动登录 + 启动 Hyprland
+# 3. 自动登录 + 启动 Hyprland（Live 模式）
 # ============================================================
-echo "[3/10] 配置自动登录..."
+echo "[3/10] 配置自动登录（Live 模式）..."
 
 mkdir -p /etc/systemd/system/getty@tty1.service.d
 cat > /etc/systemd/system/getty@tty1.service.d/autologin.conf <<EOF
@@ -87,10 +87,42 @@ EOF
 # 用户登录后自动启动 Hyprland
 cat > "/home/$DEFAULT_USER/.zprofile" <<'ZPROFILE'
 if [ -z "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ]; then
-    exec Hyprland
+    # 检查是否启用了手机号登录
+    if [ -f ~/.cnomarchy/login_enabled ]; then
+        exec python3 /usr/local/bin/cnomarchy-login.py
+    else
+        exec Hyprland
+    fi
 fi
 ZPROFILE
 chown "$DEFAULT_USER:$DEFAULT_USER" "/home/$DEFAULT_USER/.zprofile"
+
+# 部署手机号登录界面（已通过 airootfs 自动复制到 /usr/local/bin/）
+echo "  手机号登录界面已部署: /usr/local/bin/cnomarchy-login.py"
+chmod +x /usr/local/bin/cnomarchy-login.py 2>/dev/null || true
+
+# 创建一键启用/禁用手机号登录命令
+cat > /usr/local/bin/cnomarchy-enable-login <<'ENABLELOGIN'
+#!/usr/bin/env bash
+# 启用手机号登录
+mkdir -p ~/.cnomarchy
+touch ~/.cnomarchy/login_enabled
+echo "✅ 手机号登录已启用"
+echo "下次登录时将显示手机号登录界面"
+echo "请确保已配置认证后端 API 地址: ~/.cnomarchy/api_config"
+echo ""
+echo "配置示例:"
+echo '  echo "API_BASE=https://api.yourdomain.com/v1" > ~/.cnomarchy/api_config'
+ENABLELOGIN
+chmod +x /usr/local/bin/cnomarchy-enable-login
+
+cat > /usr/local/bin/cnomarchy-disable-login <<'DISABLELOGIN'
+#!/usr/bin/env bash
+# 禁用手机号登录，恢复自动登录
+rm -f ~/.cnomarchy/login_enabled
+echo "✅ 手机号登录已禁用，恢复自动登录"
+DISABLELOGIN
+chmod +x /usr/local/bin/cnomarchy-disable-login
 
 # ============================================================
 # 4. 启用服务

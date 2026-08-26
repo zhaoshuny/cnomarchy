@@ -168,6 +168,7 @@ fastfetch
 neovim
 vim
 nano
+tk
 git
 git-lfs
 github-cli
