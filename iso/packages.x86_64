@@ -18,6 +18,7 @@ grub
 efibootmgr
 os-prober
 mkinitcpio
+syslinux
 
 # ============================================================
 # 文件系统
