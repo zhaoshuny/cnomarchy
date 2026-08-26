@@ -116,7 +116,6 @@ vulkan-intel
 intel-media-driver
 vulkan-radeon
 libva-mesa-driver
-mesa-vdpau
 
 # Hyprland 窗口管理器
 hyprland
@@ -131,11 +130,9 @@ grim
 slurp
 swappy
 wl-clipboard
-wlogout
 swayidle
 dunst
 brightnessctl
-light
 power-profiles-daemon
 upower
 acpi
@@ -163,7 +160,6 @@ eza
 bat
 htop
 btop
-neofetch
 fastfetch
 
 # ============================================================
@@ -265,7 +261,6 @@ ttf-font-awesome
 # 办公 (最小)
 # ============================================================
 libreoffice-fresh
-libreoffice-fresh-zh-CN
 evince
 
 # ============================================================
@@ -309,7 +304,6 @@ nethogs
 bmon
 tlp
 powertop
-journalctl
 logrotate
 reflector
 pacman-contrib
@@ -335,7 +329,7 @@ wine-mono
 wine-gecko
 winetricks
 steam
-steam-native-runtime
+# steam-native-runtime  # 包名可能已变更，暂不预装
 
 # ============================================================
 # 以下包需要 AUR 或 Omarchy 源，暂不预装，安装后通过脚本安装
